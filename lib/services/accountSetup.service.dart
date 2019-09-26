@@ -20,9 +20,21 @@ class Profile {
   }
 }
 
-Future<Profile> fetchProfile() async {
+Future<Profile> fetchProfileLogin(dynamic loginInfo) async {
   final response =
-      await http.get(url);
+      await http.post(url, body: loginInfo);
+
+  if(response.statusCode == 200) {
+    return Profile.fromJson((json.decode(response.body)));
+  } else{
+    throw Exception('Failed to load post');
+  }
+}
+
+
+Future<Profile> fetchProfileCreateAccount(dynamic accountInfo) async {
+  final response =
+  await http.post(url, body: accountInfo);
 
   if(response.statusCode == 200) {
     return Profile.fromJson((json.decode(response.body)));
