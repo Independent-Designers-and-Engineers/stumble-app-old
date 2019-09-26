@@ -6,6 +6,6 @@ import 'package:frontend/pages/home/home.screen.dart';
 Map<String, Widget Function(BuildContext)> routePages = {
   '/': (BuildContext context) => StartScreen(),
   '/create-account': (BuildContext context) => new Scaffold(),
-  '/login': (BuildContext context) => LoginScreen(),
+  '/login': (BuildContext context) => LogIn(),
   '/home': (BuildContext context) => HomeScreen(),
 };
