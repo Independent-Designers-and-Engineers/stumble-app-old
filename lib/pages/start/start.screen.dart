@@ -17,7 +17,7 @@ class StartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       key: this.key,
-      backgroundColor: Colors.pinkAccent,
+      backgroundColor: Colors.blueAccent,
       body: Center(
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
