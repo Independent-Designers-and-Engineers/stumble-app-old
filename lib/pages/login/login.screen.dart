@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:frontend/services/notific.dart';
 class LogIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,12 @@ class LogIn extends StatelessWidget {
                     ),
                   ),
                   new RaisedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                         NotificationService n = new NotificationService();
+                        n.sendNotification("this club suxs");
+
+
+                      },
                       padding: const EdgeInsets.all(0.0),
                       child: Container(
                           decoration: const BoxDecoration(
