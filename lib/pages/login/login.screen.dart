@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class LogIn extends StatelessWidget {
+  final _phoneNumberController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -22,6 +25,7 @@ class LogIn extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 80, 0, 10),
                     child: new TextField(
+                      controller: _phoneNumberController,
                       maxLength: 11,
                       keyboardType: TextInputType.number,
                       cursorWidth: 2,
@@ -36,6 +40,7 @@ class LogIn extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 80),
                     child: new TextField(
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                           border: OutlineInputBorder(),
