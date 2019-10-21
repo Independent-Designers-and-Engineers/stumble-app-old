@@ -1,8 +1,26 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class LogIn extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:frontend/services/network.service.dart';
+
+class Login extends StatefulWidget {
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  void loginPressed(context){
+    var loginInfo = {"Phone Number": _phoneNumberController.text
+      , "Password": _passwordController.text};
+    var loginJSON = jsonEncode(loginInfo);
+    _phoneNumberController.clear();
+    _passwordController.clear();
+    fetchProfileLogin(loginJSON);
+    Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +67,7 @@ class LogIn extends StatelessWidget {
                     ),
                   ),
                   new RaisedButton(
-                      onPressed: () {},
+                      onPressed: () => loginPressed(context),
                       padding: const EdgeInsets.all(0.0),
                       child: Container(
                           decoration: const BoxDecoration(

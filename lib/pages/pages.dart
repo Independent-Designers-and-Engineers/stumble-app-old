@@ -8,6 +8,6 @@ Map<String, Widget Function(BuildContext)> routePages = {
   '/': (BuildContext context) => Startup(),
   '/start-screen': (BuildContext context) => StartScreen(),
   '/create-account': (BuildContext context) => SignupScreen(),
-  '/login': (BuildContext context) => LogIn(),
+  '/login': (BuildContext context) => Login(),
   '/home': (BuildContext context) => HomeScreen(),
 };
