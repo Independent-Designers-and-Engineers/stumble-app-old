@@ -39,7 +39,7 @@ Future<File> writeToken(String token) async {
 }
 
 
-Future<String> fetchPost() async {
+Future<String> initialVerification() async {
   final token = await readToken();
   final response =
     await http.get(
@@ -48,10 +48,8 @@ Future<String> fetchPost() async {
     );
 
   if (response.statusCode == 200) {
-    // If server returns an OK response, parse the JSON.
     return token;
   } else {
-    // If that response was not OK, throw an error.
     throw Exception('Failed to get authorization');
   }
 }

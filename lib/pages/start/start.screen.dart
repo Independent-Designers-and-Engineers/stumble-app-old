@@ -1,7 +1,40 @@
+import 'package:frontend/pages/home/home.screen.dart';
+import 'package:frontend/pages/pages.dart';
 import 'package:frontend/pages/start/animations.dart';
+import 'package:frontend/services/network.service.dart';
+import 'package:frontend/services/requests.dart';
 import 'package:frontend/variables.dart' as env;
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+
+class Startup extends StatefulWidget {
+  @override
+  _StartupState createState() => _StartupState();
+}
+
+class _StartupState extends State<Startup> {
+  String route = "/start-screen";
+
+  @override
+  initState(){
+    super.initState();
+    getRoute();
+  }
+
+  getRoute() async{
+    String token = await readToken();
+    Profile profile = await fetchProfileData(token);
+    if(profile != null){
+      route = "/home";
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return routePages[route](context);
+  }
+}
+
 
 class StartScreen extends StatelessWidget {
 
@@ -12,6 +45,8 @@ class StartScreen extends StatelessWidget {
       fontSize: 24,
     ),
   );
+
+
 
   @override
   Widget build(BuildContext context) {
