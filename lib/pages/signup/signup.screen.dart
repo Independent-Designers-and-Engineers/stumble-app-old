@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/pages/match/match.screen.dart';
+import 'package:frontend/pages/match/match.route.dart';
 
 final firstNameNode = FocusNode();
 final lastNameNode = FocusNode();
@@ -18,7 +20,7 @@ var inputs = {
   "pass": "N/A"
 };
 
-class PhoneInputFormatter extends TextInputFormatter{ //TODO:
+class PhoneInputFormatter extends TextInputFormatter{ //TODO: implement phone formatter
   TextEditingValue formatEditUpdate(TextEditingValue oldv, TextEditingValue newv){
   }
 }
@@ -126,9 +128,6 @@ Widget passwordWidget(context){
 }
 
 
-
-
-
 class SignupScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -171,111 +170,27 @@ class _SignupScreenState extends State<SignupScreen>{
             fnameWidget(context), lnameWidget(context), phoneWidget(context), passwordWidget(context),
               RaisedButton(
                 focusNode: buttonNode,
-              textColor:  Colors.white,
-              color: Colors.orangeAccent,
-              child: Text("Create"),
-              onPressed: () => {
-              },
+                textColor:  Colors.white,
+                color: Colors.orangeAccent,
+                child: Text("Create"),
+                onPressed: () {
+
+                },
+              ),
+              RaisedButton(
+                focusNode: buttonNode,
+                textColor:  Colors.white,
+                color: Colors.orangeAccent,
+                child: Text("temp"),
+                onPressed: () {
+                    Navigator.of(context).push(
+                        TransparentRoute(builder: (BuildContext context) => MatchPopup())
+                    );
+                },
             )
             ],
           ),
         )
     );
   }
-
 }
-
-/*
-class SignupScreen extends StatelessWidget {
-
-  static TextEditingController phoneController = TextEditingController();
-
-
-  final Widget phoneWidget = Center(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      height: 60,
-      child: TextField(
-        //controller: phoneController,
-        keyboardType: TextInputType.number,
-        enableInteractiveSelection: false,
-        maxLength: 10,
-        obscureText: false,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Phone',
-        ),
-      )
-    )
-  );
-
-  final Widget fnameWidget = Center(
-      child: Container(
-          padding: const EdgeInsets.all(8),
-          height: 60,
-          child: TextField(
-            keyboardType: TextInputType.text,
-            enableInteractiveSelection: true,
-            obscureText: false,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'First Name',
-            ),
-          )
-      )
-  );
-
-  final Widget lnameWidget = Center(
-      child: Container(
-          padding: const EdgeInsets.all(8),
-          height: 60,
-          child: TextField(
-            keyboardType: TextInputType.text,
-            enableInteractiveSelection: false,
-            obscureText: false,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Last Name',
-            ),
-          )
-      )
-  );
-
-  final Widget passwordWidget = Center(
-      child: Container(
-          padding: const EdgeInsets.all(8),
-          height: 60,
-          child: TextField(
-            //controller: phoneController,
-            keyboardType: TextInputType.text,
-            enableInteractiveSelection: true,
-            obscureText: true,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Password',
-            ),
-          )
-      )
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.yellow[100],
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 120, 10, 10),
-          child: Column(children: <Widget>[
-            fnameWidget, lnameWidget, phoneWidget, passwordWidget,
-            /*RaisedButton(
-              color: Colors.pinkAccent,
-              child: Text("Create"),
-              onPressed: phoneController,
-            ) */
-          ],
-          ),
-        )
-    );
-  }
-}
-
- */
