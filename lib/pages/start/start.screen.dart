@@ -40,7 +40,7 @@ class StartScreen extends StatelessWidget {
                    RaisedButton(
                      color: Colors.deepOrangeAccent,
                      splashColor: Colors.deepOrange,
-                     onPressed: () => Navigator.pushNamed(context, '/create-account'),
+                     onPressed: () => Navigator.pushNamed(context, '/message-list'),
                      child: Text('Create Account', style: TextStyle(color: Colors.white)),
                    ),
                    RichText(
