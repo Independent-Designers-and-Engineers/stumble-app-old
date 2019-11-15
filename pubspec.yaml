@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
 
@@ -76,3 +76,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+  assets:
+    - assets/icons/
+
+  fonts:
+    - family: Milkshake
+      fonts:
+        - asset: assets/fonts/Milkshake.ttf
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway-Bold.ttf
