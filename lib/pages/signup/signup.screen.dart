@@ -13,6 +13,10 @@ final _lnameController = TextEditingController();
 final _phoneController = TextEditingController();
 final _passwordController = TextEditingController();
 
+final creme = Color(0xFFF7E7CE);
+final peach = Color(0xFFD13394);
+final tang = Color(0xFFFFA74F);
+
 var inputs = {
   "fname": "N/A",
   "lname": "N/A",
@@ -127,7 +131,6 @@ Widget passwordWidget(context){
   );
 }
 
-
 class SignupScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -163,15 +166,15 @@ class _SignupScreenState extends State<SignupScreen>{
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Colors.yellow[100],
+      backgroundColor: creme,
         body: Padding(
           padding: const EdgeInsets.fromLTRB(10, 120, 10, 50),
           child: Column(children: <Widget>[
             fnameWidget(context), lnameWidget(context), phoneWidget(context), passwordWidget(context),
               RaisedButton(
                 focusNode: buttonNode,
-                textColor:  Colors.white,
-                color: Colors.orangeAccent,
+                textColor: peach,
+                color: tang,
                 child: Text("Create"),
                 onPressed: () {
 
