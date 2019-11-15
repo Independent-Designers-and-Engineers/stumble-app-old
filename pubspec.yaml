@@ -62,25 +62,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+   assets:
+     - assets/icons/
    fonts:
      - family: Milkshake
        fonts:
-         - asset: fonts\Milkshake400.ttf
-#     - family: Playfair
-#       fonts:
-#         - asset: PlayfairDisplay-Black.ttf
-#           weight: 700
+         - asset: assets/fonts/Milkshake.ttf
+     - family: Raleway
+       fonts:
+         - asset: assets/fonts/Raleway-Bold.ttf
 
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
 
-  assets:
-    - assets/icons/
-
-  fonts:
-    - family: Milkshake
-      fonts:
-        - asset: assets/fonts/Milkshake.ttf
-    - family: Raleway
-      fonts:
-        - asset: assets/fonts/Raleway-Bold.ttf

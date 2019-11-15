@@ -187,7 +187,7 @@ class _SignupScreenState extends State<SignupScreen>{
                 child: Text("temp"),
                 onPressed: () {
                     Navigator.of(context).push(
-                        TransparentRoute(builder: (BuildContext context) => MatchPopup())
+                        TransparentRoute(builder: (BuildContext context) => MatchScreen())
                     );
                 },
             )

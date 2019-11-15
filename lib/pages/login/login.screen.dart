@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LogIn extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   final creme = Color(0xFFF7E7CE);
   final peach = Color(0xFFD13394);
   final tang = Color(0xFFFFA74F);

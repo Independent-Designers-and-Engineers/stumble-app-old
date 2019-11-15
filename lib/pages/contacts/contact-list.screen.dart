@@ -1,9 +1,7 @@
-import 'dart:ui' as prefix0;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:frontend/pages/message thread/Contact.dart';
-import 'package:frontend/pages/start/animations.dart';
+import 'package:frontend/pages/contacts/contact.model.dart';
 
 class MessageList extends StatefulWidget {
   @override
@@ -19,7 +17,7 @@ class MessageListState extends State<MessageList> {
   final GlobalKey<AnimatedListState> _listKey = GlobalKey();
 
   // backing data
-  List<Contact> contacts = List.generate(4, (index) {
+  List<Contact> contacts = List.generate(15, (index) {
     return Contact("name{$index}", "lastMessage hello my name is yasser and i like to dance and i like to dance {$index}", "https://picsum.photos/250?image=${index+320}", "id{$index}", "$index");
   });
 
@@ -207,11 +205,6 @@ class MessageListState extends State<MessageList> {
       ),
     );
   }
-
-
-
-
-
 }
 
 
