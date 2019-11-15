@@ -1,7 +1,14 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/pages.dart';
 
-void main() => runApp(MyApp());
+
+void main() {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -22,7 +29,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       routes: routePages, // from pages.dart
-      initialRoute: "/",
+      initialRoute: "/"
     );
   }
 }
