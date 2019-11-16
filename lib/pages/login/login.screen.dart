@@ -13,12 +13,13 @@ class _LoginState extends State<Login> {
   final _passwordController = TextEditingController();
 
   void loginPressed(context){
-    var loginInfo = {"Phone Number": _phoneNumberController.text
-      , "Password": _passwordController.text};
+    var loginInfo = {"phoneNumber": _phoneNumberController.text,
+      "password": _passwordController.text};
     var loginJSON = jsonEncode(loginInfo);
     _phoneNumberController.clear();
     _passwordController.clear();
-    var success = fetchProfileLogin(loginJSON);
+    var success = request("/login", RequestCode.FETCH_LOGIN,
+        loginInfo: loginJSON);
     if(success) {
       Navigator.pushNamedAndRemoveUntil(
           context, '/home', (Route<dynamic> route) => false);

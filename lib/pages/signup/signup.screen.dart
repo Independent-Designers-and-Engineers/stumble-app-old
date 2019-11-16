@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:frontend/services/network.service.dart';
 
 final firstNameNode = FocusNode();
 final lastNameNode = FocusNode();
@@ -32,7 +33,7 @@ Widget phoneWidget(context){
             focusNode: phoneNode,
             textInputAction: TextInputAction.next,
 
-            //controller: phoneController,
+            controller: _phoneController,
             keyboardType: TextInputType.number,
             enableInteractiveSelection: false,
             onSubmitted: (v){
@@ -85,7 +86,7 @@ Widget fnameWidget(context){
           child: TextField(
             focusNode: lastNameNode,
             textInputAction: TextInputAction.next,
-
+            controller: _lnameController,
             keyboardType: TextInputType.text,
             enableInteractiveSelection: false,
             obscureText: false,
@@ -109,7 +110,7 @@ Widget passwordWidget(context){
           child: TextField(
             focusNode: passwordNode,
             textInputAction: TextInputAction.next,
-            //controller: phoneController,
+            controller: _passwordController,
             keyboardType: TextInputType.text,
             enableInteractiveSelection: true,
             obscureText: true,
@@ -137,6 +138,24 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen>{
+
+  void createAccountPressed(context){
+    var AccountInfo = {"phoneNumber": _phoneController.text,
+      "password": _passwordController.text, "firstName": _fnameController.text,
+      "lastName": _lnameController.text
+    };
+    var accountJSON = jsonEncode(createAccountInfo);
+    _fnameController.clear();
+    _lnameController.clear();
+    _phoneController.clear();
+    _passwordController.clear();
+    Profile profile = request('/createAccount', RequestCode.FETCH_CREATE,
+      accountInfo: accountJSON);
+    if(profile != null) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/home', (Route<dynamic> route) => false);
+    }
+  }
 
   void initState(){
     _fnameController.addListener(() {
@@ -168,21 +187,22 @@ class _SignupScreenState extends State<SignupScreen>{
         body: Padding(
           padding: const EdgeInsets.fromLTRB(10, 120, 10, 50),
           child: Column(children: <Widget>[
-            fnameWidget(context), lnameWidget(context), phoneWidget(context), passwordWidget(context),
-              RaisedButton(
-                focusNode: buttonNode,
+            fnameWidget(context),
+            lnameWidget(context),
+            phoneWidget(context),
+            passwordWidget(context),
+            RaisedButton(
+              focusNode: buttonNode,
               textColor:  Colors.white,
               color: Colors.orangeAccent,
               child: Text("Create"),
-              onPressed: () => {
-              },
+              onPressed: () => createAccountPressed(context),
             )
-            ],
-          ),
-        )
-    );
+          ],
+        ),
+      )
+    )
   }
-
 }
 
 /*
