@@ -18,8 +18,11 @@ class _LoginState extends State<Login> {
     var loginJSON = jsonEncode(loginInfo);
     _phoneNumberController.clear();
     _passwordController.clear();
-    fetchProfileLogin(loginJSON);
-    Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+    var success = fetchProfileLogin(loginJSON);
+    if(success) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/home', (Route<dynamic> route) => false);
+    }
   }
 
   @override

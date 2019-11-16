@@ -23,7 +23,8 @@ class _StartupState extends State<Startup> {
 
   getRoute() async{
     String token = await readToken();
-    Profile profile = await fetchProfileData(token);
+    Profile profile = await request("/profile", RequestCode.FETCH_PROFILE,
+        token:token);
     if(profile != null){
       route = "/home";
     }
