@@ -4,7 +4,7 @@ import 'package:frontend/services/requests.dart';
 import 'package:http/http.dart' as http;
 import 'package:frontend/variables.dart' as env;
 
-final String API_URL = "https://stumble-server.herokuapp.com/";
+final String API_URL = "https://stumble-server.herokuapp.com";
 enum RequestCode {POST, FETCH_PROFILE, FETCH_LOGIN, FETCH_CREATE}
 String _token = "";
 
@@ -12,16 +12,19 @@ class Profile {
   final String firstName;
   final String lastName;
   final String dateOfBirth;
+  final String password;
   final int phoneNum;
 
-  Profile({this.firstName, this.lastName, this.dateOfBirth, this.phoneNum});
+  Profile({this.firstName, this.lastName, this.dateOfBirth, this.phoneNum,
+    this.password});
 
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
       firstName: json['firstName'],
       lastName: json['lastName'],
       dateOfBirth: json['dateOfBirth'],
-      phoneNum: json['phoneNumber']
+      phoneNum: json['phoneNumber'],
+      password: json['password']
     );
   }
 }
@@ -86,6 +89,6 @@ Future<Profile> fetchProfileCreateAccount(String url, dynamic accountInfo) async
     writeToken(token);
     return Profile.fromJson((json.decode(responseBody["profile"])));
   } else{
-    return null;
+    throw Exception('Failed to load post');
   }
 }

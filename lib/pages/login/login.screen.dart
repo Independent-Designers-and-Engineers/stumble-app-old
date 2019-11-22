@@ -12,14 +12,18 @@ class _LoginState extends State<Login> {
   final _phoneNumberController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void loginPressed(context){
-    var loginInfo = {"Phone Number": _phoneNumberController.text
-      , "Password": _passwordController.text};
+  void loginPressed(context) async{
+    var loginInfo = {"phoneNumber": _phoneNumberController.text,
+      "password": _passwordController.text};
     var loginJSON = jsonEncode(loginInfo);
     _phoneNumberController.clear();
     _passwordController.clear();
-    fetchProfileLogin(loginJSON);
-    Navigator.pushNamedAndRemoveUntil(context, '/home', (Route<dynamic> route) => false);
+    var success = await request("/user/login", RequestCode.FETCH_LOGIN,
+        loginInfo: loginJSON);
+    if(success) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/home', (Route<dynamic> route) => false);
+    }
   }
 
   @override
