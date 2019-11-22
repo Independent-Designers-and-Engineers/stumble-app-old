@@ -1,4 +1,4 @@
-# Untitled Frontend App
+# Stumble
 
 An app designed to notify the user when they are in the vicinity of someone with similar interests
 and allows you to text them.
