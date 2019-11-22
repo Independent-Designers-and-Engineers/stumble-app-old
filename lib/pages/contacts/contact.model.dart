@@ -7,5 +7,16 @@ class Contact
   String unread;
   
   Contact(this.name, this.lastMessage, this.photo, this.id, this.unread);
+
+  factory Contact.fromJson(Map<String, dynamic> json)
+  {
+    return Contact(
+      json['name'],
+      json['lastMessage'],
+      json['photo'],
+      json['id'],
+      json['unread']
+    );
+  }
 }
 
