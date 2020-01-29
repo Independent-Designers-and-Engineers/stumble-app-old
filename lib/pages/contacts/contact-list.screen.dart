@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:frontend/pages/contacts/contact-item.widget.dart';
-import 'package:frontend/pages/contacts/contact.model.dart';
+import 'package:frontend/models/contact.model.dart';
 
 class MessageList extends StatefulWidget {
   @override
