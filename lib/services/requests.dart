@@ -43,7 +43,7 @@ Future<String> initialVerification() async {
   final token = await readToken();
   final response =
     await http.get(
-        env.API_LINK + "/login",
+        env.API_URL + "/login",
         headers: {HttpHeaders.authorizationHeader: "Bearer " + token}
     );
 

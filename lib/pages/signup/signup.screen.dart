@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:frontend/services/network.service.dart';
+import 'package:frontend/pages/match/match.screen.dart';
+import 'package:frontend/pages/match/match.route.dart';
 
 final firstNameNode = FocusNode();
 final lastNameNode = FocusNode();
@@ -14,6 +15,10 @@ final _lnameController = TextEditingController();
 final _phoneController = TextEditingController();
 final _passwordController = TextEditingController();
 
+final creme = Color(0xFFF7E7CE);
+final peach = Color(0xFFD13394);
+final tang = Color(0xFFFFA74F);
+
 var inputs = {
   "fname": "N/A",
   "lname": "N/A",
@@ -21,12 +26,14 @@ var inputs = {
   "pass": "N/A"
 };
 
-class PhoneInputFormatter extends TextInputFormatter{ //TODO:
-  TextEditingValue formatEditUpdate(TextEditingValue oldv, TextEditingValue newv){
+class PhoneInputFormatter extends TextInputFormatter {
+  //TODO: implement phone formatter
+  TextEditingValue formatEditUpdate(TextEditingValue oldv,
+      TextEditingValue newv) {
   }
 }
 
-Widget phoneWidget(context){
+Widget phoneWidget(context) {
   return Center(
       child: Container(
           padding: const EdgeInsets.all(8),
@@ -38,10 +45,10 @@ Widget phoneWidget(context){
             controller: _phoneController,
             keyboardType: TextInputType.number,
             enableInteractiveSelection: false,
-            onSubmitted: (v){
+            onSubmitted: (v) {
               FocusScope.of(context).requestFocus(passwordNode);
             },
-            inputFormatters:[
+            inputFormatters: [
               LengthLimitingTextInputFormatter(10),
             ],
             obscureText: false,
@@ -55,7 +62,7 @@ Widget phoneWidget(context){
   );
 }
 
-Widget fnameWidget(context){
+Widget fnameWidget(context) {
   return Center(
       child: Container(
           padding: const EdgeInsets.all(8),
@@ -63,13 +70,13 @@ Widget fnameWidget(context){
           child: TextField(
             focusNode: firstNameNode,
             textInputAction: TextInputAction.next,
-            autofocus:true,
+            autofocus: true,
 
             controller: _fnameController,
             keyboardType: TextInputType.text,
             enableInteractiveSelection: true,
             obscureText: false,
-            onSubmitted: (v){
+            onSubmitted: (v) {
               FocusScope.of(context).requestFocus(lastNameNode);
             },
             decoration: InputDecoration(
@@ -78,9 +85,10 @@ Widget fnameWidget(context){
             ),
           )
       )
-  );}
+  );
+}
 
-  Widget lnameWidget(context){
+Widget lnameWidget(context) {
   return Center(
       child: Container(
           padding: const EdgeInsets.all(8),
@@ -92,7 +100,7 @@ Widget fnameWidget(context){
             keyboardType: TextInputType.text,
             enableInteractiveSelection: false,
             obscureText: false,
-            onSubmitted: (v){
+            onSubmitted: (v) {
               FocusScope.of(context).requestFocus(phoneNode);
             },
             decoration: InputDecoration(
@@ -104,7 +112,7 @@ Widget fnameWidget(context){
   );
 }
 
-Widget passwordWidget(context){
+Widget passwordWidget(context) {
   return Center(
       child: Container(
           padding: const EdgeInsets.all(8),
@@ -116,7 +124,7 @@ Widget passwordWidget(context){
             keyboardType: TextInputType.text,
             enableInteractiveSelection: true,
             obscureText: true,
-            onSubmitted: (v){
+            onSubmitted: (v) {
               FocusScope.of(context).requestFocus(buttonNode);
             },
             decoration: InputDecoration(
@@ -135,43 +143,32 @@ class SignupScreen extends StatefulWidget {
   }
 }
 
-class _SignupScreenState extends State<SignupScreen>{
+class _SignupScreenState extends State<SignupScreen> {
 
-  void createAccountPressed(context) async{
-    var createAccountInfo = {"phoneNumber": _phoneController.text,
-      "password": _passwordController.text, "firstName": _fnameController.text,
-      "lastName": _lnameController.text
-    };
-    var accountJSON = jsonEncode(createAccountInfo);
+  void createAccountPressed(context) async {
     _fnameController.clear();
     _lnameController.clear();
     _phoneController.clear();
     _passwordController.clear();
-    Profile profile = await request('/user/create', RequestCode.FETCH_CREATE,
-      accountInfo: accountJSON);
-    if(profile != null) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, '/home', (Route<dynamic> route) => false);
-    }
   }
 
-  void initState(){
+  void initState() {
     _fnameController.addListener(() {
       final text = _fnameController.text;
       inputs["fname"] = text;
     });
 
-    _lnameController.addListener((){
+    _lnameController.addListener(() {
       final text = _lnameController.text;
       inputs["lname"] = text;
     });
 
-    _phoneController.addListener((){
+    _phoneController.addListener(() {
       final text = _lnameController.text;
       inputs["phone"] = text;
     });
 
-    _passwordController.addListener((){
+    _passwordController.addListener(() {
       final text = _passwordController.text;
       inputs["pass"] = text;
     });
@@ -179,9 +176,9 @@ class _SignupScreenState extends State<SignupScreen>{
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.yellow[100],
+        backgroundColor: creme,
         body: Padding(
           padding: const EdgeInsets.fromLTRB(10, 120, 10, 50),
           child: Column(children: <Widget>[
@@ -191,108 +188,26 @@ class _SignupScreenState extends State<SignupScreen>{
             passwordWidget(context),
             RaisedButton(
               focusNode: buttonNode,
-              textColor:  Colors.white,
-              color: Colors.orangeAccent,
+              textColor: peach,
+              color: tang,
               child: Text("Create"),
               onPressed: () => createAccountPressed(context),
-            )],
-          ),
-        )
-    );
-  }
-}
-
-/*
-class SignupScreen extends StatelessWidget {
-
-  static TextEditingController phoneController = TextEditingController();
-
-
-  final Widget phoneWidget = Center(
-    child: Container(
-      padding: const EdgeInsets.all(8),
-      height: 60,
-      child: TextField(
-        //controller: phoneController,
-        keyboardType: TextInputType.number,
-        enableInteractiveSelection: false,
-        maxLength: 10,
-        obscureText: false,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Phone',
-        ),
-      )
-    )
-  );
-
-  final Widget fnameWidget = Center(
-      child: Container(
-          padding: const EdgeInsets.all(8),
-          height: 60,
-          child: TextField(
-            keyboardType: TextInputType.text,
-            enableInteractiveSelection: true,
-            obscureText: false,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'First Name',
             ),
-          )
-      )
-  );
-
-  final Widget lnameWidget = Center(
-      child: Container(
-          padding: const EdgeInsets.all(8),
-          height: 60,
-          child: TextField(
-            keyboardType: TextInputType.text,
-            enableInteractiveSelection: false,
-            obscureText: false,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Last Name',
-            ),
-          )
-      )
-  );
-
-  final Widget passwordWidget = Center(
-      child: Container(
-          padding: const EdgeInsets.all(8),
-          height: 60,
-          child: TextField(
-            //controller: phoneController,
-            keyboardType: TextInputType.text,
-            enableInteractiveSelection: true,
-            obscureText: true,
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Password',
-            ),
-          )
-      )
-  );
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.yellow[100],
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 120, 10, 10),
-          child: Column(children: <Widget>[
-            fnameWidget, lnameWidget, phoneWidget, passwordWidget,
-            /*RaisedButton(
-              color: Colors.pinkAccent,
-              child: Text("Create"),
-              onPressed: phoneController,
-            ) */
+            RaisedButton(
+              focusNode: buttonNode,
+              textColor: Colors.white,
+              color: Colors.orangeAccent,
+              child: Text("temp"),
+              onPressed: () {
+                Navigator.of(context).push(
+                    TransparentRoute(
+                        builder: (BuildContext context) => MatchScreen())
+                );
+              },
+            )
           ],
           ),
         )
     );
   }
 }
-
- */

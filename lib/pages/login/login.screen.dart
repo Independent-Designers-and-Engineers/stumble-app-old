@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:frontend/services/network.service.dart';
+import 'package:frontend/services/api.service.dart';
+
 
 class Login extends StatefulWidget {
   @override
@@ -15,15 +16,20 @@ class _LoginState extends State<Login> {
   void loginPressed(context) async{
     var loginInfo = {"phoneNumber": _phoneNumberController.text,
       "password": _passwordController.text};
-    var loginJSON = jsonEncode(loginInfo);
     _phoneNumberController.clear();
     _passwordController.clear();
-    var success = await request("/user/login", RequestCode.FETCH_LOGIN,
+
+    APIService apiService =  new APIService();
+    dynamic ret = await apiService.login(loginInfo);
+    final snackBar = SnackBar(content: Text(ret.toString()));
+    Scaffold.of(context).showSnackBar(snackBar);
+
+    /*var success = await request("/user/login", RequestCode.FETCH_LOGIN,
         loginInfo: loginJSON);
     if(success) {
       Navigator.pushNamedAndRemoveUntil(
           context, '/home', (Route<dynamic> route) => false);
-    }
+    }*/
   }
 
   @override
