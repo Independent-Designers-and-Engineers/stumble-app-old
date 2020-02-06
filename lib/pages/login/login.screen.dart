@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/services/api.service.dart';
 
 class LoginScreen extends StatelessWidget {
   final creme = Color(0xFFF7E7CE);
@@ -47,7 +48,15 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   new RaisedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        Map<String, dynamic> body = {'phoneNumber': '4804804801', 'password': '1mypassword'};
+                        APIService apiService = new APIService();
+                        print('========================\n\n\n');
+                        LOGIN_STATUS ll = await apiService.login(body);
+                        print(ll);
+                        print(APIService.HEADERS['authorization']);
+                        print('\n\n\n========================');
+                      },
                       textColor: peach,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       color: tang,

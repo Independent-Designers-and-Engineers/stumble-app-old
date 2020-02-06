@@ -12,7 +12,7 @@ class APIService  {
     HttpHeaders.userAgentHeader: 'Flutter-App-2020'
   };
 
-  void updateToken(String token)
+  static void updateToken(String token)
   {
     APIService.HEADERS[HttpHeaders.authorizationHeader] = token;
   }
@@ -27,14 +27,15 @@ class APIService  {
     return http.post(
       env.API_URL + "login",
       headers: HEADERS,
-      body: loginInfo
+      body: jsonEncode(loginInfo)
     ).then((http.Response response) {
+      print(response.statusCode);
+      print(response.body);
       if(response.statusCode == 200) {
         Map loginRes = jsonDecode(response.body);
-        this.updateToken(loginRes['token']);
+        APIService.updateToken(loginRes['token']);
         return LOGIN_STATUS.SUCCESS;
-      }
-      else return LOGIN_STATUS.MISSING_INFO;
+      } else return LOGIN_STATUS.MISSING_INFO;
     });
   }
 
@@ -43,7 +44,7 @@ class APIService  {
     final res = await http.post(
       env.API_URL + "create",
       headers: HEADERS,
-      body: accountInfo
+      body: jsonEncode(accountInfo)
     );
     return jsonDecode(res.body);
   }
