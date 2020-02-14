@@ -46,6 +46,7 @@ class APIService  {
       headers: HEADERS,
       body: jsonEncode(accountInfo)
     );
+    print(res.statusCode);
     return jsonDecode(res.body);
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:frontend/pages/match/match.screen.dart';
 import 'package:frontend/pages/match/match.route.dart';
+import 'package:frontend/services/api.service.dart';
+import 'package:frontend/common/classes/PhoneInputFormatter.dart' as phoneFormatter;
 
 final firstNameNode = FocusNode();
 final lastNameNode = FocusNode();
@@ -17,6 +19,8 @@ final creme = Color(0xFFF7E7CE);
 final peach = Color(0xFFD13394);
 final tang = Color(0xFFFFA74F);
 
+APIService API = new APIService();
+
 var inputs = {
   "fname": "N/A",
   "lname": "N/A",
@@ -24,10 +28,7 @@ var inputs = {
   "pass": "N/A"
 };
 
-class PhoneInputFormatter extends TextInputFormatter{ //TODO: implement phone formatter
-  TextEditingValue formatEditUpdate(TextEditingValue oldv, TextEditingValue newv){
-  }
-}
+
 
 Widget phoneWidget(context){
   return Center(
@@ -38,14 +39,16 @@ Widget phoneWidget(context){
             focusNode: phoneNode,
             textInputAction: TextInputAction.next,
 
-            //controller: phoneController,
+            controller: _phoneController,
             keyboardType: TextInputType.number,
             enableInteractiveSelection: false,
             onSubmitted: (v){
               FocusScope.of(context).requestFocus(passwordNode);
             },
-            inputFormatters:[
-              LengthLimitingTextInputFormatter(10),
+            inputFormatters:<TextInputFormatter>[
+              LengthLimitingTextInputFormatter(14),
+              WhitelistingTextInputFormatter.digitsOnly,
+              phoneFormatter.NumberInputFormatter()
             ],
             obscureText: false,
             decoration: InputDecoration(
@@ -91,6 +94,7 @@ Widget fnameWidget(context){
           child: TextField(
             focusNode: lastNameNode,
             textInputAction: TextInputAction.next,
+            controller: _lnameController,
 
             keyboardType: TextInputType.text,
             enableInteractiveSelection: false,
@@ -115,7 +119,7 @@ Widget passwordWidget(context){
           child: TextField(
             focusNode: passwordNode,
             textInputAction: TextInputAction.next,
-            //controller: phoneController,
+            controller: _passwordController,
             keyboardType: TextInputType.text,
             enableInteractiveSelection: true,
             obscureText: true,
@@ -152,7 +156,7 @@ class _SignupScreenState extends State<SignupScreen>{
     });
 
     _phoneController.addListener((){
-      final text = _lnameController.text;
+      final text = _phoneController.text.replaceAll(RegExp('[^\\d]'), '');
       inputs["phone"] = text;
     });
 
@@ -176,8 +180,25 @@ class _SignupScreenState extends State<SignupScreen>{
                 textColor: peach,
                 color: tang,
                 child: Text("Create"),
-                onPressed: () {
+                onPressed: () async {
+                  Map<String,dynamic> signInMap = {
+                    "password": inputs["pass"],
+                    "phoneNumber": inputs["phone"],
+                    "firstName": inputs["fname"],
+                    "lastName": inputs["lname"],
+                  };
+                   await API.createAccount(signInMap);
 
+                  Map<String,dynamic> loginMap = {
+                    "phoneNumber": inputs["phone"],
+                    "password": inputs["pass"]
+                  };
+                  dynamic loginResult = await API.login(loginMap);
+                  print(loginResult);
+
+                  if (loginResult != LOGIN_STATUS.MISSING_INFO){
+                    Navigator.pushReplacementNamed(context, '/message-list');
+                  }
                 },
               ),
               RaisedButton(
@@ -186,9 +207,7 @@ class _SignupScreenState extends State<SignupScreen>{
                 color: Colors.orangeAccent,
                 child: Text("temp"),
                 onPressed: () {
-                    Navigator.of(context).push(
-                        TransparentRoute(builder: (BuildContext context) => MatchScreen())
-                    );
+                    print(inputs);
                 },
             )
             ],

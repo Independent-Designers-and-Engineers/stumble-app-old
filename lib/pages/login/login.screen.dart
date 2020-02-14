@@ -49,7 +49,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   new RaisedButton(
                       onPressed: () async {
-                        Map<String, dynamic> body = {'phoneNumber': '4804804801', 'password': '1mypassword'};
+                        Map<String, dynamic> body = {'phoneNumber': '4804804801', 'password': 'mypassword'};
                         APIService apiService = new APIService();
                         print('========================\n\n\n');
                         LOGIN_STATUS ll = await apiService.login(body);
