@@ -47,7 +47,7 @@ class MatchScreen extends StatelessWidget {
                                     color: Colors.white,
                                     fontSize: 48,
                                     fontWeight: FontWeight.bold,
-                                    fontFamily: "Milkshake",
+                                    fontFamily: "Itim",
                                   )),
                             ))),
                     Center(
@@ -57,13 +57,13 @@ class MatchScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               //TODO: Replace Image.asset with AssetImage (better scaling)
-                              Image.asset("assets/icons/Stumble_orange_tag.png",
+                              Image.asset("assets/icons/Stumble_geotag_coral.png",
                                   width: 100, height: 100),
                               Container(
                                   child: Padding(
                                       padding:
                                       const EdgeInsets.fromLTRB(85, 0, 85, 5))),
-                              Image.asset("assets/icons/Stumble_purple_tag.png",
+                              Image.asset("assets/icons/stumble_geotag_coral.png",
                                   width: 100, height: 100),
                             ],
                           ),

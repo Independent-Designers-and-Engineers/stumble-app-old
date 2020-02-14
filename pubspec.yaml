@@ -65,6 +65,9 @@ flutter:
    assets:
      - assets/icons/
    fonts:
+     - family: Itim
+       fonts:
+         - asset: assets/fonts/Itim-Regular.ttf
      - family: Milkshake
        fonts:
          - asset: assets/fonts/Milkshake.ttf
