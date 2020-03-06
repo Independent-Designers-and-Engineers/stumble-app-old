@@ -4,7 +4,8 @@ import 'package:frontend/pages/match/match.screen.dart';
 import 'package:frontend/pages/match/match.route.dart';
 import 'package:frontend/services/api.service.dart';
 import 'package:frontend/common/classes/PhoneInputFormatter.dart' as phoneFormatter;
-import 'package:masked_text/masked_text.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+
 
 final firstNameNode = FocusNode();
 final lastNameNode = FocusNode();
@@ -19,6 +20,10 @@ final _passwordController = TextEditingController();
 final creme = Color(0xFFF7E7CE);
 final peach = Color(0xFFD13394);
 final tang = Color(0xFFFFA74F);
+
+var maskFormatter = MaskTextInputFormatter(
+    mask: '(###) ### - ####',
+    filter: { "#": RegExp(r'[0-9]') });
 
 APIService API = new APIService();
 
@@ -36,18 +41,22 @@ Widget phoneWidget(context){
     child: Container(
       padding: const EdgeInsets.all(8),
       height: 60,
-      child: new MaskedTextField
+      child: new TextField
         (
         focusNode: phoneNode,
+        onSubmitted: (v){
+          FocusScope.of(context).requestFocus(passwordNode);
+        },
 
-        maskedTextFieldController: _phoneController,
-        mask: "(xxx) xxx - xxxx",
+        inputFormatters: [maskFormatter],
+
         maxLength: 16,
         keyboardType: TextInputType.number,
 
-        inputDecoration: InputDecoration(
+        decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: 'Phone',
+          hintText: ('(123) 456 - 7890'),
           counterText: '',
           counterStyle: TextStyle(fontSize: 0),
         ),
@@ -204,7 +213,11 @@ class _SignupScreenState extends State<SignupScreen>{
                 focusNode: buttonNode,
                 textColor: peach,
                 color: tang,
-                child: Text("Create"),
+                child: Text("Create", style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: "Raleway"
+                ),),
                 onPressed: () async {
                   Map<String,dynamic> signInMap = {
                     "password": inputs["pass"],
