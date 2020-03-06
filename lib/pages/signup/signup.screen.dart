@@ -4,6 +4,7 @@ import 'package:frontend/pages/match/match.screen.dart';
 import 'package:frontend/pages/match/match.route.dart';
 import 'package:frontend/services/api.service.dart';
 import 'package:frontend/common/classes/PhoneInputFormatter.dart' as phoneFormatter;
+import 'package:masked_text/masked_text.dart';
 
 final firstNameNode = FocusNode();
 final lastNameNode = FocusNode();
@@ -31,6 +32,30 @@ var inputs = {
 
 
 Widget phoneWidget(context){
+  return Center(
+    child: Container(
+      padding: const EdgeInsets.all(8),
+      height: 60,
+      child: new MaskedTextField
+        (
+        focusNode: phoneNode,
+
+        maskedTextFieldController: _phoneController,
+        mask: "(xxx) xxx - xxxx",
+        maxLength: 16,
+        keyboardType: TextInputType.number,
+
+        inputDecoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Phone',
+          counterText: '',
+          counterStyle: TextStyle(fontSize: 0),
+        ),
+      ),
+    )
+  );
+
+
   return Center(
       child: Container(
           padding: const EdgeInsets.all(8),
@@ -69,7 +94,7 @@ Widget fnameWidget(context){
           child: TextField(
             focusNode: firstNameNode,
             textInputAction: TextInputAction.next,
-            autofocus:true,
+            //autofocus:true,
 
             controller: _fnameController,
             keyboardType: TextInputType.text,
@@ -201,15 +226,6 @@ class _SignupScreenState extends State<SignupScreen>{
                   }
                 },
               ),
-              RaisedButton(
-                focusNode: buttonNode,
-                textColor:  Colors.white,
-                color: Colors.orangeAccent,
-                child: Text("temp"),
-                onPressed: () {
-                    print(inputs);
-                },
-            )
             ],
           ),
         )
